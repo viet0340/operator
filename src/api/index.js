@@ -7,7 +7,7 @@ const getDataList = async () => {
             'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ storeIds: [382, 447, 448, 445, 444, 405, 321, 303, 147, 223, 82, 95, 119, 96], "supplyUnitPriceGroupIds": [], "productTypes": [], "product": "", "largeCategoryCodes": [], "mediumCategoryCodes": [], "smallCategoryCodes": [], "subCategoryCodes": [], "productGroupIds": [], "isReadOnlyProductTp": true })
+        body: JSON.stringify({ storeIds: [], "supplyUnitPriceGroupIds": [], "productTypes": [], "product": "", "largeCategoryCodes": [], "mediumCategoryCodes": [], "smallCategoryCodes": [], "subCategoryCodes": [], "productGroupIds": [], "isReadOnlyProductTp": true })
     }).then(res => res.json());
 
     return res;

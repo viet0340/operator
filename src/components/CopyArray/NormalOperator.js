@@ -19,20 +19,35 @@ export const NormalOperator = () => {
         if (loadingSpread) return;
         const { stores, products, marginRates } = await firstData();
         const t0 = performance.now();
-        
-        // let lists = new Array(stores.length * products.length);
+
+        // let dictionary = {}
+        // marginRates.forEach(marginRate => {
+        //     const { supplyUnitPriceGroup, productType } = marginRate;
+        //     let data = dictionary[`${supplyUnitPriceGroup}_${productType}`];
+        //     if (!data) {
+        //         dictionary[`${supplyUnitPriceGroup}_${productType}`] = [marginRate];
+        //     } else {
+        //         dictionary[`${supplyUnitPriceGroup}_${productType}`] = data.concat(marginRate);
+        //     }
+        // });
+
         let lists = [];
-        // let index = 0;
         for (let i = 0; i < stores.length; i++) {
             const store = stores[i];
             for (let j = 0; j < products.length; j++) {
                 const product = products[j];
-                // lists[index] = Object.assign({}, product, store);
-                // index++;
-                lists.push(Object.assign(product, store));
+                let marginRate = [];
+                for (let x = 0; x < marginRates.length; x++) {
+                    const { supplyUnitPriceGroup, productType } = marginRates[x];
+                    if (supplyUnitPriceGroup === store.supplyUnitPriceGroup && productType === product.productTp) {
+                        marginRate.push(marginRates[x])
+                    }
+                }
+                // const marginRate = dictionary[`${store.supplyUnitPriceGroup}_${product.productTp}`]
+                // lists.push(Object.assign(product, store, { marginRate }));
+                lists.push(Object.assign(product, store, { marginRate }));
             }
         }
-        
         const t1 = performance.now();
         setTimeSpread((t1 - t0).toFixed(2));
         setLoadingSpread(false);
@@ -41,7 +56,7 @@ export const NormalOperator = () => {
             store: stores.length,
             result: lists.length,
         });
-        console.log(products, stores)
+        console.log(lists[0])
     }
 
     return (<div className='grid grid-cols-2 gap-10 mt-10'>
