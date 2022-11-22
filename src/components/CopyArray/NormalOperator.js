@@ -19,44 +19,15 @@ export const NormalOperator = () => {
         if (loadingSpread) return;
         const { stores, products, marginRates } = await firstData();
         const t0 = performance.now();
-
-        // let dictionary = {}
-        // marginRates.forEach(marginRate => {
-        //     const { supplyUnitPriceGroup, productType } = marginRate;
-        //     let data = dictionary[`${supplyUnitPriceGroup}_${productType}`];
-        //     if (!data) {
-        //         dictionary[`${supplyUnitPriceGroup}_${productType}`] = [marginRate];
-        //     } else {
-        //         dictionary[`${supplyUnitPriceGroup}_${productType}`] = data.concat(marginRate);
-        //     }
-        // });
-
-        let lists = [];
-        for (let i = 0; i < stores.length; i++) {
-            const store = stores[i];
-            for (let j = 0; j < products.length; j++) {
-                const product = products[j];
-                let marginRate = [];
-                for (let x = 0; x < marginRates.length; x++) {
-                    const { supplyUnitPriceGroup, productType } = marginRates[x];
-                    if (supplyUnitPriceGroup === store.supplyUnitPriceGroup && productType === product.productTp) {
-                        marginRate.push(marginRates[x])
-                    }
-                }
-                // const marginRate = dictionary[`${store.supplyUnitPriceGroup}_${product.productTp}`]
-                // lists.push(Object.assign(product, store, { marginRate }));
-                lists.push(Object.assign(product, store, { marginRate }));
-            }
-        }
+        
         const t1 = performance.now();
         setTimeSpread((t1 - t0).toFixed(2));
         setLoadingSpread(false);
-        setDataLength({
-            product: products.length,
-            store: stores.length,
-            result: lists.length,
-        });
-        console.log(lists[0])
+        // setDataLength({
+        //     product: products.length,
+        //     store: stores.length,
+        //     result: lists.length,
+        // });
     }
 
     return (<div className='grid grid-cols-2 gap-10 mt-10'>
